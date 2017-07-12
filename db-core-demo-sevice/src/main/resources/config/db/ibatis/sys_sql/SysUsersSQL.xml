@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="SysUsers">
+	<select id="countByWhere" resultClass="Integer" parameterClass="HashMap">
+        SELECT COUNT(1) FROM SYS_USERs
+        <dynamic prepend="WHERE">
+            <isNotEmpty property="userName" prepend="and">
+                USER_NAME LIKE #userName#
+            </isNotEmpty>
+        </dynamic>
+    </select>
+
+    <select id="findByWhere" resultClass="HashMap" parameterClass="HashMap">
+        SELECT * FROM SYS_USERs 
+        <dynamic prepend="WHERE">
+            <isNotEmpty property="userName" prepend="and">
+                USER_NAME LIKE #userName#
+            </isNotEmpty>
+        </dynamic>
+        ORDER BY USER_NAME ASC
+    </select>
+    
+    <update id="testUpdateWithCondition" parameterClass="HashMap">
+    	update sys_users set user_name=#userName# where user_id=#userId#
+    </update>
+</sqlMap>
